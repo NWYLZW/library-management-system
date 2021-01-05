@@ -1,5 +1,7 @@
 package com.yijie.libraryManagementSystem;
 
+import com.yijie.libraryManagementSystem.view.Login;
+
 /**
  * @desc    Main.java
  * @author  yijie
@@ -8,5 +10,6 @@ package com.yijie.libraryManagementSystem;
  */
 public class Main {
     public static void main(String[] args) {
+        Login.show();
     }
 }
