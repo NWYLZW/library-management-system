@@ -3,6 +3,7 @@ package com.yijie.libraryManagementSystem.view;
 import com.yijie.libraryManagementSystem.tool.FontTool;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -33,6 +34,8 @@ public class Login {
                 .setText("\uE65E");
         FontTool.setFont(min)
                 .setText("\uE6B7");
+        min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         close.addMouseListener(new MouseAdapter() {
             @Override
@@ -41,7 +44,6 @@ public class Login {
                 System.exit(0);
             }
         });
-
         min.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -73,5 +75,12 @@ public class Login {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit()
+                .getScreenSize();
+        frame.setLocation(
+                (screenSize.width  - frame.getWidth() )/2,
+                (screenSize.height - frame.getHeight())/2
+        );
     }
 }
