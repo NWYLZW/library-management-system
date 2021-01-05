@@ -32,6 +32,11 @@ public class Login {
     }
     public MinListener minListener = null;
 
+    interface LoginSuccessListener {
+        public void emit();
+    }
+    public LoginSuccessListener loginSuccessListener = null;
+
     public void created() {
         FontTool.setFont(icon)
                 .setText("\uE656");
@@ -59,6 +64,15 @@ public class Login {
                 }
             }
         });
+        loginBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (loginSuccessListener != null) {
+                    loginSuccessListener.emit();
+                }
+            }
+        });
     }
 
     public void mounted() {
@@ -78,6 +92,12 @@ public class Login {
             @Override
             public void emit() {
                 frame.setExtendedState(JFrame.ICONIFIED);
+            }
+        };
+        loginUi.loginSuccessListener = new Login.LoginSuccessListener() {
+            @Override
+            public void emit() {
+                frame.setVisible(false);
             }
         };
         frame.setContentPane(loginUi.main);
