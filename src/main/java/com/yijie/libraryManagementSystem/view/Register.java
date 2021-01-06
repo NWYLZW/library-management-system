@@ -1,13 +1,12 @@
 package com.yijie.libraryManagementSystem.view;
 import com.yijie.libraryManagementSystem.config.AppConfig;
 import com.yijie.libraryManagementSystem.tool.FontTool;
+import com.yijie.libraryManagementSystem.tool.ListenerTool;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
 
-public class Register {
+public class Register extends AbsActivity {
 
     private JPanel main;
     private JTextField nicknameInput;
@@ -30,87 +29,37 @@ public class Register {
     private JLabel icon;
     private JLabel name;
 
-    interface MinListener {
-        public void emit();
-    }
-    public Register.MinListener minListener = null;
-
     interface registerSuccessListener {
         public void emit();
     }
     public Register.registerSuccessListener registerSuccessListener = null;
 
-    public void created() {
+    @Override
+    public JPanel getMain() {
+        return main;
+    }
 
+    public void register() {
+        registerSuccessListener.emit();
+    }
+
+    public void created() {
         FontTool.setFont(close)
                 .setText("\uE65E");
         FontTool.setFont(min)
                 .setText("\uE6B7");
-
-
         min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        close.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                System.exit(0);
-            }
-        });
-        min.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (minListener != null) {
-                    minListener.emit();
-                }
-            }
-        });
-        registerButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (registerSuccessListener != null) {
-                    registerSuccessListener.emit();
-                }
-            }
-        });
-    }
-
-    public void mounted() {
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
 
-    public Register() {
-        this.created();
-        this.mounted();
+    public void mounted() {
+        ListenerTool.setMouseClickWithLeftBtn(close, () -> {
+            System.exit(0);
+        }).setMouseClickWithLeftBtn(min, () -> {
+            emitListener(AbsActivity.MinListener.class);
+        }).setMouseClickWithLeftBtn(registerButton, this::register
+        );
     }
-
-    public static void show() {
-        JFrame frame = new JFrame("Register");
-        Register registerUi=new Register();
-
-        registerUi.minListener = new MinListener() {
-            @Override
-            public void emit() {
-                frame.setExtendedState(JFrame.ICONIFIED);
-            }
-        };
-        registerUi.registerSuccessListener = new Register.registerSuccessListener() {
-            @Override
-            public void emit() {
-                frame.setVisible(false);
-            }
-        };
-        frame.setContentPane(registerUi.main);
-        frame.setUndecorated(true);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        frame.setLocationRelativeTo(null);
-    }
-
 }
