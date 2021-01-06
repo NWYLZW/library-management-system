@@ -7,6 +7,6 @@ package com.yijie.libraryManagementSystem.config;
  * @note    2021-01-05 16:21 yijie Created AppConfig.java file
  */
 public class AppConfig {
-    public static String NAME = "QQ(仿)";
+    public static String NAME = "PP";
     public static String VERSION = "1.0.0.0";
 }
