@@ -78,8 +78,8 @@ public class Login extends AbsActivity {
     @Override
     public void mounted() {
         ListenerTool
-                .setMouseClickWithLeftBtn(loginBtn, () -> System.exit(0))
-                .setMouseClickWithLeftBtn(loginBtn, () -> emitListener(MinListener.class))
+                .setMouseClickWithLeftBtn(close, () -> System.exit(0))
+                .setMouseClickWithLeftBtn(min, () -> emitListener(MinListener.class))
                 .setMouseClickWithLeftBtn(loginBtn, this::login)
                 .setMouseClickWithLeftBtn(registerBtn, () -> System.out.println(1));
     }
