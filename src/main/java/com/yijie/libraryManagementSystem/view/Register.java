@@ -10,27 +10,26 @@ import javax.swing.*;
 public class Register {
 
     private JPanel main;
-    private JTextField nickname;
-    private JPasswordField passwordField1;
+    private JTextField nicknameInput;
+    private JPasswordField passwordInput;
     private JRadioButton female;
     private JRadioButton male;
-    private JComboBox year;
-    private JComboBox day;
-    private JComboBox month;
+    private JComboBox yearInput;
+    private JComboBox dayInput;
+    private JComboBox monthInput;
     private JPanel left;
     private JPanel right;
     private JButton registerButton;
-    private JLabel registerpassword;
-    private JLabel registergender;
-    private JLabel registerbirthday;
+    private JLabel pwd;
+    private JLabel gender;
+    private JLabel birthday;
     private JLabel title;
     private JPanel titlePanel;
     private JLabel close;
     private JLabel min;
     private JLabel icon;
-    private JLabel registerusername;
+    private JLabel name;
 
-    //
     interface MinListener {
         public void emit();
     }

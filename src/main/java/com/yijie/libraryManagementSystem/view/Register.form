@@ -154,7 +154,7 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="d866c" class="javax.swing.JTextField" binding="nickname">
+                      <component id="d866c" class="javax.swing.JTextField" binding="nickNameInput">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -174,7 +174,7 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="be3b8" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+                      <component id="be3b8" class="javax.swing.JPasswordField" binding="passWordInput">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -184,7 +184,7 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="9276" class="javax.swing.JLabel" binding="registerpassword">
+                  <component id="9276" class="javax.swing.JLabel" binding="pwd">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -192,7 +192,7 @@
                       <text value="密码"/>
                     </properties>
                   </component>
-                  <component id="45f09" class="javax.swing.JLabel" binding="registerusername">
+                  <component id="45f09" class="javax.swing.JLabel" binding="name">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -254,19 +254,19 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="7a09" class="javax.swing.JComboBox" binding="year">
+                      <component id="7a09" class="javax.swing.JComboBox" binding="yearInput">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="13f2a" class="javax.swing.JComboBox" binding="day">
+                      <component id="13f2a" class="javax.swing.JComboBox" binding="dayInput">
                         <constraints>
                           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="624f8" class="javax.swing.JComboBox" binding="month">
+                      <component id="624f8" class="javax.swing.JComboBox" binding="monthInput">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -274,7 +274,7 @@
                       </component>
                     </children>
                   </grid>
-                  <component id="708f8" class="javax.swing.JLabel" binding="registerbirthday">
+                  <component id="708f8" class="javax.swing.JLabel" binding="birthday">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -282,7 +282,7 @@
                       <text value="生日"/>
                     </properties>
                   </component>
-                  <component id="7530d" class="javax.swing.JLabel" binding="registergender">
+                  <component id="7530d" class="javax.swing.JLabel" binding="gender">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
