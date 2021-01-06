@@ -97,7 +97,9 @@ public class Login extends AbsActivity {
 
     public static void show() {
         WindowTool.openFrame("Login", new Login(), (frame, activity) -> {
-            activity.loginSuccessListener = () -> frame.setVisible(false);
+            activity.loginSuccessListener = () -> {
+                WindowTool.openFrame("Chats", new Chats(), null, null, null);
+            };
         }, null, newWindow -> {
             newWindow.setLocationRelativeTo(null);
         });
