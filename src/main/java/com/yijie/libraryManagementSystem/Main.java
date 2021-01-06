@@ -26,7 +26,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main.getMapper(UserMapper.class).selectUser(0);
+        Main.getMapper(UserMapper.class).getUserByPPNum("10000");
         Login.show();
     }
 }

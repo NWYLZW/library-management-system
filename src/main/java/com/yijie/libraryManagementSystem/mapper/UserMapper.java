@@ -1,7 +1,10 @@
 package com.yijie.libraryManagementSystem.mapper;
 
+import com.yijie.libraryManagementSystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @desc    UserMapper.java
@@ -11,6 +14,11 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper {
-    @Select("select * where id = #{id} from user")
-    UserMapper selectUser(int id);
+    @Select("select * from user where ppNum = #{ppNum}")
+    User getUserByPPNum(String ppNum);
+
+    List<User> getAllUsers();
+    int addUser(User user);
+    int deleteUser(String ppNum);
+    int editUser(User user);
 }
