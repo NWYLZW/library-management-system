@@ -61,4 +61,13 @@ public class WindowTool {
         runConsumer(dealNewWindow, newFrame);
         return activity;
     }
+
+    public static void closeFrame() {
+        if (!frameStack.isEmpty()) {
+            frameStack.pop().setVisible(false);
+        }
+        if (!frameStack.isEmpty()) {
+            frameStack.peek().setVisible(true);
+        }
+    }
 }

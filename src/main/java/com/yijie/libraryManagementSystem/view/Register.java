@@ -2,6 +2,7 @@ package com.yijie.libraryManagementSystem.view;
 import com.yijie.libraryManagementSystem.config.AppConfig;
 import com.yijie.libraryManagementSystem.tool.FontTool;
 import com.yijie.libraryManagementSystem.tool.ListenerTool;
+import com.yijie.libraryManagementSystem.tool.WindowTool;
 
 import java.awt.*;
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class Register extends AbsActivity {
     private JLabel min;
     private JLabel icon;
     private JLabel name;
+    private JLabel back;
 
     interface registerSuccessListener {
         public void emit();
@@ -44,12 +46,18 @@ public class Register extends AbsActivity {
     }
 
     public void created() {
-        FontTool.setFont(close)
-                .setText("\uE65E");
         FontTool.setFont(min)
                 .setText("\uE6B7");
+        FontTool.setFont(back)
+                .setText("\uE636");
+        FontTool.setFont(close)
+                .setText("\uE65E");
         min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        FontTool.setFont(icon)
+                .setText("\ue612");
 
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
@@ -57,9 +65,10 @@ public class Register extends AbsActivity {
     public void mounted() {
         ListenerTool.setMouseClickWithLeftBtn(close, () -> {
             System.exit(0);
+        }).setMouseClickWithLeftBtn(back, () -> {
+            WindowTool.closeFrame();
         }).setMouseClickWithLeftBtn(min, () -> {
             emitListener(AbsActivity.MinListener.class);
-        }).setMouseClickWithLeftBtn(registerButton, this::register
-        );
+        }).setMouseClickWithLeftBtn(registerButton, this::register);
     }
 }

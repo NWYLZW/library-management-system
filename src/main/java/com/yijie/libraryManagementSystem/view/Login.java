@@ -48,15 +48,15 @@ public class Login extends AbsActivity {
 
     @Override
     public void created() {
-        FontTool.setFont(icon)
-                .setText("\ue612");
+        FontTool.setFont(min)
+                .setText("\uE6B7");
         FontTool.setFont(close)
                 .setText("\uE65E");
         min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        FontTool.setFont(min)
-                .setText("\uE6B7");
+        FontTool.setFont(icon)
+                .setText("\ue612");
         FontTool.setFont(user)
                 .setText("\ue6fd");
         FontTool.setFont(pwd)
