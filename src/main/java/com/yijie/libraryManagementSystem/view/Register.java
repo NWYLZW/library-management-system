@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 
-public class register {
+public class Register {
 
     private JPanel main;
     private JTextField nickname;
@@ -34,12 +34,12 @@ public class register {
     interface MinListener {
         public void emit();
     }
-    public register.MinListener minListener = null;
+    public Register.MinListener minListener = null;
 
     interface registerSuccessListener {
         public void emit();
     }
-    public register.registerSuccessListener registerSuccessListener = null;
+    public Register.registerSuccessListener registerSuccessListener = null;
 
     public void created() {
 
@@ -83,14 +83,14 @@ public class register {
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
 
-    public register() {
+    public Register() {
         this.created();
         this.mounted();
     }
 
     public static void show() {
         JFrame frame = new JFrame("Register");
-        register registerUi=new register();
+        Register registerUi=new Register();
 
         registerUi.minListener = new MinListener() {
             @Override
@@ -98,7 +98,7 @@ public class register {
                 frame.setExtendedState(JFrame.ICONIFIED);
             }
         };
-        registerUi.registerSuccessListener = new register.registerSuccessListener() {
+        registerUi.registerSuccessListener = new Register.registerSuccessListener() {
             @Override
             public void emit() {
                 frame.setVisible(false);
