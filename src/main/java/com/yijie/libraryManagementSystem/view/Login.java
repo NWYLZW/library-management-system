@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
  * @date    2021-01-05 10:50
  * @note    2021-01-05 10:50 yijie Created Login.java file
  */
-public class Login {
+public class Login extends AbsActivity {
     private JPanel main;
     private JPanel top;
     private JPanel bottom;
@@ -30,21 +30,23 @@ public class Login {
     private JLabel user;
     private JLabel pwd;
 
-    interface MinListener {
-        public void emit();
-    }
-    public MinListener minListener = null;
-
+    /**
+     * 登陆按钮的监听者
+     */
     interface LoginSuccessListener {
         public void emit();
     }
-    public LoginSuccessListener loginSuccessListener = null;
+    public Login.LoginSuccessListener loginSuccessListener = null;
 
+    @Override
     public void created() {
         FontTool.setFont(icon)
                 .setText("\ue612");
         FontTool.setFont(close)
                 .setText("\uE65E");
+        min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         FontTool.setFont(min)
                 .setText("\uE6B7");
         FontTool.setFont(user)
@@ -52,10 +54,11 @@ public class Login {
         FontTool.setFont(pwd)
                 .setText("\ue6ac");
 
+        title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
+    }
 
-        min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
+    @Override
+    public void mounted() {
         close.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -67,9 +70,7 @@ public class Login {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (minListener != null) {
-                    minListener.emit();
-                }
+                emitListener(MinListener.class);
             }
         });
         loginBtn.addMouseListener(new MouseAdapter() {
@@ -83,34 +84,15 @@ public class Login {
         });
     }
 
-    public void mounted() {
-        title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
-    }
-
-    public Login() {
-        this.created();
-        this.mounted();
-    }
-
     public static void show() {
         JFrame frame = new JFrame("Login");
         Login loginUi = new Login();
 
-        loginUi.minListener = new MinListener() {
-            @Override
-            public void emit() {
-                frame.setExtendedState(JFrame.ICONIFIED);
-            }
-        };
-        loginUi.loginSuccessListener = new Login.LoginSuccessListener() {
-            @Override
-            public void emit() {
-                frame.setVisible(false);
-            }
-        };
+        loginUi.setMinListener(() -> frame.setExtendedState(JFrame.ICONIFIED));
+        loginUi.loginSuccessListener = () -> frame.setVisible(false);
+
         frame.setContentPane(loginUi.main);
         frame.setUndecorated(true);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -1,7 +1,6 @@
 package com.yijie.libraryManagementSystem.mapper;
 
 import com.yijie.libraryManagementSystem.entity.User;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

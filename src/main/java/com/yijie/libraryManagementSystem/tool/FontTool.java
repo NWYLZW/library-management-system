@@ -19,6 +19,12 @@ public class FontTool {
         return FontTool.setFont(label, null, null);
     }
 
+    public static void setFonts(JLabel[] labels) {
+        for (JLabel label : labels) {
+            FontTool.setFont(label, null, null);
+        }
+    }
+
     public static JLabel setFont(JLabel label, Integer fontSize) {
         return FontTool.setFont(label, fontSize, null);
     }
