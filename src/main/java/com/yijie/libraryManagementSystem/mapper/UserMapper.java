@@ -1,6 +1,7 @@
 package com.yijie.libraryManagementSystem.mapper;
 
 import com.yijie.libraryManagementSystem.entity.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @note    2021-01-06 10:20 yijie Created UserMapper.java file
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends AbsMapper {
     /**
      * 通过pp号获取用户名
      * @param ppNum pp号

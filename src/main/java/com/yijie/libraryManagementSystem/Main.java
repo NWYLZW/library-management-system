@@ -1,7 +1,5 @@
 package com.yijie.libraryManagementSystem;
 
-import com.yijie.libraryManagementSystem.mapper.UserMapper;
-import com.yijie.libraryManagementSystem.model.AbsModel;
 import com.yijie.libraryManagementSystem.view.Login;
 
 /**
