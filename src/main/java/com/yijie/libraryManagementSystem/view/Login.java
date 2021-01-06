@@ -4,11 +4,10 @@ import com.yijie.libraryManagementSystem.config.AppConfig;
 import com.yijie.libraryManagementSystem.model.UserModel;
 import com.yijie.libraryManagementSystem.tool.FontTool;
 import com.yijie.libraryManagementSystem.tool.ListenerTool;
+import com.yijie.libraryManagementSystem.tool.WindowTool;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * @desc    Login.java
@@ -41,6 +40,11 @@ public class Login extends AbsActivity {
         public void emit();
     }
     public Login.LoginSuccessListener loginSuccessListener = null;
+
+    @Override
+    public JPanel getMain() {
+        return main;
+    }
 
     @Override
     public void created() {
@@ -77,26 +81,21 @@ public class Login extends AbsActivity {
 
     @Override
     public void mounted() {
-        ListenerTool
-                .setMouseClickWithLeftBtn(close, () -> System.exit(0))
-                .setMouseClickWithLeftBtn(min, () -> emitListener(MinListener.class))
-                .setMouseClickWithLeftBtn(loginBtn, this::login)
-                .setMouseClickWithLeftBtn(registerBtn, () -> System.out.println(1));
+        ListenerTool.setMouseClickWithLeftBtn(close, () -> {
+            System.exit(0);
+        }).setMouseClickWithLeftBtn(min, () -> {
+            emitListener(MinListener.class);
+        }).setMouseClickWithLeftBtn(loginBtn, this::login
+        ).setMouseClickWithLeftBtn(registerBtn, () -> {
+            System.out.println("123");
+        });
     }
 
     public static void show() {
-        JFrame frame = new JFrame("Login");
-        Login loginUi = (Login) new Login().load();
-
-        loginUi.setMinListener(() -> frame.setExtendedState(JFrame.ICONIFIED));
-        loginUi.loginSuccessListener = () -> frame.setVisible(false);
-
-        frame.setContentPane(loginUi.main);
-        frame.setUndecorated(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        frame.setLocationRelativeTo(null);
+        WindowTool.openFrame("Login", new Login(), (frame, activity) -> {
+            activity.loginSuccessListener = () -> frame.setVisible(false);
+        }, null, newWindow -> {
+            newWindow.setLocationRelativeTo(null);
+        });
     }
 }

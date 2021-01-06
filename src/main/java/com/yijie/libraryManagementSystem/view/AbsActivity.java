@@ -2,6 +2,8 @@ package com.yijie.libraryManagementSystem.view;
 
 import com.yijie.libraryManagementSystem.view.itf.ItfActivity;
 
+import javax.swing.*;
+
 /**
  * @desc    absActivity.java
  * @author  yijie
@@ -15,13 +17,21 @@ public abstract class AbsActivity implements ItfActivity {
     }
     LifeStage stage = null;
 
+    public AbsActivity load() {
+        stage = LifeStage.CREATED;
+        created();
+        stage = LifeStage.MOUNTED;
+        mounted();
+        return this;
+    }
+
     /**
      * 最小化按钮的监听者
      */
-    interface MinListener {
+    public interface MinListener {
         public void emit();
     }
-    private Login.MinListener minListener = null;
+    private MinListener minListener = null;
 
     /**
      * listener抛出
@@ -33,16 +43,8 @@ public abstract class AbsActivity implements ItfActivity {
         }
     }
 
-    public void setMinListener(Login.MinListener minListener) {
+    public void setMinListener(MinListener minListener) {
         this.minListener = minListener;
-    }
-
-    public AbsActivity load() {
-        stage = LifeStage.CREATED;
-        created();
-        stage = LifeStage.MOUNTED;
-        mounted();
-        return this;
     }
 
     public LifeStage currentStage() {
