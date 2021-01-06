@@ -19,13 +19,14 @@ public class Login {
     private JPanel top;
     private JPanel bottom;
     private JTextField userNameInput;
-    private JTextField passwordInput;
+    private JPasswordField passwordInput;
     private JButton loginBtn;
     private JPanel titlePanel;
     private JLabel close;
     private JLabel min;
     private JLabel icon;
     private JLabel title;
+    private JButton 注册Button;
 
     interface MinListener {
         public void emit();
