@@ -6,7 +6,7 @@ package com.yijie.libraryManagementSystem.model;
  * @date    2021-01-06 11:01
  * @note    2021-01-06 11:01 yijie Created UserModel.java file
  */
-public class UserModel {
+public class UserModel extends AbsModel {
     /**
      * 登陆用户
      * @param ppNum     PP号

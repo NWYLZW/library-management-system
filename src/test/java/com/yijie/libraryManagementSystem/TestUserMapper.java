@@ -1,6 +1,9 @@
 package com.yijie.libraryManagementSystem;
 
+import com.yijie.libraryManagementSystem.mapper.UserMapper;
+import com.yijie.libraryManagementSystem.model.AbsModel;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * @desc    TestUserMapper.java
@@ -11,5 +14,7 @@ import org.junit.Test;
 public class TestUserMapper {
     @Test
     public void testFindUser() {
+        UserMapper userMapper = AbsModel.getMapper(UserMapper.class);
+        assertNull(userMapper.getUserByPPNum("2000000"));
     }
 }
