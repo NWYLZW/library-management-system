@@ -1,37 +1,32 @@
 package com.yijie.libraryManagementSystem.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @desc    User.java
- * @author  yijie
- * @date    2021-01-06 11:01
- * @note    2021-01-06 11:01 yijie Created User.java file
+ * @author  iBesokuse
+ * @date    2021-01-06 19:32
+ * @note    2021-01-06 19:32 iBesokuse Created User.java file
  */
+@Data
 public class User {
-    //pp号
-    @Getter @Setter
+    /** pp号 */
     private String ppNum;
-    //昵称
-    @Getter @Setter
+    /** 昵称 */
     private String nickName;
-    //密码
-    @Getter @Setter
-    private String passWord;
-    //默认头像ID
-    @Getter @Setter
-    private int avatarId;
-    //性别
-    @Getter @Setter
-    private String sex;
-    //诞生日
-    @Getter @Setter
-    private String birthDay;
-    //注册时间
-    @Getter @Setter
-    private String registerTime;
+    /** 密码 */
+    private String password;
+    /** 默认头像ID */
+    private String avatarPath;
+    /** 性别 */
+    private Boolean gender;
+    /** 诞生日 */
+    private Date birthday;
 
-
-
+    /** 创建时间 */
+    private Date cDateTime;
+    /** 修改时间 */
+    private Date mDateTime;
 }
