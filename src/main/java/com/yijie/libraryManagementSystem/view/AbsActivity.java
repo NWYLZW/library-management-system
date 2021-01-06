@@ -37,11 +37,12 @@ public abstract class AbsActivity implements ItfActivity {
         this.minListener = minListener;
     }
 
-    public AbsActivity() {
+    public AbsActivity load() {
         stage = LifeStage.CREATED;
         created();
         stage = LifeStage.MOUNTED;
         mounted();
+        return this;
     }
 
     public LifeStage currentStage() {

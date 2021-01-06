@@ -1,7 +1,9 @@
 package com.yijie.libraryManagementSystem.view;
 
 import com.yijie.libraryManagementSystem.config.AppConfig;
+import com.yijie.libraryManagementSystem.model.UserModel;
 import com.yijie.libraryManagementSystem.tool.FontTool;
+import com.yijie.libraryManagementSystem.tool.ListenerTool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,7 @@ public class Login extends AbsActivity {
     private JPanel main;
     private JPanel top;
     private JPanel bottom;
-    private JTextField userNameInput;
+    private JTextField ppNumInput;
     private JPasswordField passwordInput;
     private JButton loginBtn;
     private JPanel titlePanel;
@@ -26,9 +28,11 @@ public class Login extends AbsActivity {
     private JLabel min;
     private JLabel icon;
     private JLabel title;
-    private JButton register;
+    private JButton registerBtn;
     private JLabel user;
     private JLabel pwd;
+
+    private final UserModel userModel = new UserModel();
 
     /**
      * 登陆按钮的监听者
@@ -57,36 +61,32 @@ public class Login extends AbsActivity {
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
 
+    public void login() {
+        if (userModel.login(
+                ppNumInput.getText(), String.valueOf(passwordInput.getPassword())
+        )) {
+            if (loginSuccessListener != null) {
+                loginSuccessListener.emit();
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    null, "登陆失败！！！", "警告", JOptionPane.WARNING_MESSAGE
+            );
+        }
+    }
+
     @Override
     public void mounted() {
-        close.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                System.exit(0);
-            }
-        });
-        min.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                emitListener(MinListener.class);
-            }
-        });
-        loginBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (loginSuccessListener != null) {
-                    loginSuccessListener.emit();
-                }
-            }
-        });
+        ListenerTool
+                .setMouseClickWithLeftBtn(loginBtn, () -> System.exit(0))
+                .setMouseClickWithLeftBtn(loginBtn, () -> emitListener(MinListener.class))
+                .setMouseClickWithLeftBtn(loginBtn, this::login)
+                .setMouseClickWithLeftBtn(registerBtn, () -> System.out.println(1));
     }
 
     public static void show() {
         JFrame frame = new JFrame("Login");
-        Login loginUi = new Login();
+        Login loginUi = (Login) new Login().load();
 
         loginUi.setMinListener(() -> frame.setExtendedState(JFrame.ICONIFIED));
         loginUi.loginSuccessListener = () -> frame.setVisible(false);
