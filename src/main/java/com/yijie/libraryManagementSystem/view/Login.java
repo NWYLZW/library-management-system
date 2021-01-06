@@ -26,7 +26,9 @@ public class Login {
     private JLabel min;
     private JLabel icon;
     private JLabel title;
-    private JButton 注册Button;
+    private JButton register;
+    private JLabel user;
+    private JLabel pwd;
 
     interface MinListener {
         public void emit();
@@ -40,11 +42,16 @@ public class Login {
 
     public void created() {
         FontTool.setFont(icon)
-                .setText("\uE656");
+                .setText("\ue612");
         FontTool.setFont(close)
                 .setText("\uE65E");
         FontTool.setFont(min)
                 .setText("\uE6B7");
+        FontTool.setFont(user)
+                .setText("\ue6fd");
+        FontTool.setFont(pwd)
+                .setText("\ue6ac");
+
 
         min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
