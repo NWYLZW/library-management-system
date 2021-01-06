@@ -2,11 +2,9 @@ package com.yijie.libraryManagementSystem;
 
 import com.yijie.libraryManagementSystem.mapper.UserMapper;
 import com.yijie.libraryManagementSystem.view.Login;
-import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 /**
  * @desc    Main.java
@@ -19,16 +17,16 @@ public class Main {
             .build(Main.class.getResourceAsStream(
                     "/mybatis/config.xml"
             ));
+    static <T> T getMapper(Class<T> type) {
+        Configuration myBatisConfig = sessionFactory.getConfiguration();
+        if (!myBatisConfig.hasMapper(UserMapper.class)) {
+            myBatisConfig.addMapper(UserMapper.class);
+        }
+        return sessionFactory.openSession().getMapper(type);
+    }
 
     public static void main(String[] args) {
-        Configuration myBatisConfig = sessionFactory.getConfiguration();
-        myBatisConfig.addMapper(UserMapper.class);
-
-        UserMapper userMapper = sessionFactory.openSession().getMapper(UserMapper.class);
-
-        System.out.println(
-                userMapper.selectUser(0)
-        );
+        Main.getMapper(UserMapper.class).selectUser(0);
         Login.show();
     }
 }
