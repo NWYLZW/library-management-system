@@ -28,30 +28,40 @@ public class UserModel extends AbsModel {
     public boolean login(
             String ppNum, String password
     ) {
-        return true;
+        try {
+            UserMapper userMapper= (UserMapper) getMapper("com.yijie.libraryManagementSystem.mapper.UserMapper");
+            User user = userMapper.getUserByPPNum(ppNum);
+            if (user == null) {
+                return false;
+            }
+            return user.getPassword().equals(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
      * 注册用户
      * @return 返回注册是否成功
      */
-    public boolean register(
+    public String register(
             String nickName, String password, String avatarPath
             , Boolean gender, Date birthday
     ) {
         try {
-            UserMapper userMapper= (UserMapper) getMapper("com.yijie.libraryManagementSystem.mapper.UserMapper");
+            UserMapper userMapper = (UserMapper) getMapper("com.yijie.libraryManagementSystem.mapper.UserMapper");
             int startPPNum = 200000;
             userMapper.addUser(new User(
                     "" + (startPPNum + userMapper.getUserCount()), nickName, password, avatarPath, gender, birthday
                     , new Date(), new Date()
             ));
             sessions[0].commit();
+            return "" + (startPPNum + userMapper.getUserCount()-1);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "";
         }
-        return true;
     }
 
     /**

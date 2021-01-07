@@ -94,11 +94,15 @@ public class Register extends AbsActivity {
                 2021 - yearInput.getSelectedIndex(), monthInput.getSelectedIndex(), dayInput.getSelectedIndex() + 1
         );
 
-        if (userModel.register(
+        String newPPNum = userModel.register(
                 nicknameInput.getText(), String.valueOf(passwordInput.getPassword())
                 , avatarGroup.getSelection().getActionCommand(), gender, calendar.getTime()
-                )) {
+        );
+        if (!newPPNum.equals("")) {
             if (registerSuccessListener != null) {
+                JOptionPane.showMessageDialog(
+                        null, "注册成功！！！你的pp号是" + newPPNum, "提示", JOptionPane.INFORMATION_MESSAGE
+                );
                 registerSuccessListener.emit();
             }
         } else {
