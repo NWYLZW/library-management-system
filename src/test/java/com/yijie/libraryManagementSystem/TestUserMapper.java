@@ -29,7 +29,7 @@ public class TestUserMapper {
         assertNotNull(userMapper.getUserByPPNum("t_100001"));
     }
 
-    public void testdeleteUser() {
+    public void testDeleteUser() {
         UserMapper userMapper = AbsModel.getMapper(UserMapper.class);
         userMapper.deleteUser(userMapper.getUserByPPNum("100001").getPpNum());
         assertNotNull(userMapper.getUserByPPNum("t_100001"));
