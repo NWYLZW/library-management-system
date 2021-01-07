@@ -1,5 +1,7 @@
 package com.yijie.libraryManagementSystem.view;
 import com.yijie.libraryManagementSystem.config.AppConfig;
+import com.yijie.libraryManagementSystem.model.UserModel;
+import com.yijie.libraryManagementSystem.tool.DateTool;
 import com.yijie.libraryManagementSystem.tool.FontTool;
 import com.yijie.libraryManagementSystem.tool.ListenerTool;
 import com.yijie.libraryManagementSystem.tool.WindowTool;
@@ -7,6 +9,9 @@ import com.yijie.libraryManagementSystem.tool.WindowTool;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.*;
 
 public class Register extends AbsActivity {
@@ -41,8 +46,10 @@ public class Register extends AbsActivity {
     private JLabel picture2;
     private JLabel picture3;
     private JLabel picture4;
-    private JPanel picture;
+    private JPanel pictures;
 
+    ButtonGroup genderGroup = new ButtonGroup();
+    ButtonGroup groupPicture = new ButtonGroup();
 
     interface registerSuccessListener {
         public void emit();
@@ -54,22 +61,33 @@ public class Register extends AbsActivity {
         return main;
     }
 
+    UserModel userModel = new UserModel();
     public void register() {
-        registerSuccessListener.emit();
-    }
-    public  int getDayByYearAndMonth(int year,int month) {
-        if (month == 2)
-            if ((year%4==0 && year%100!=0) || (year%100==0 && year%400==0))
-                return 29;
-            else return 28;
-        else if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12)
-            return 31;
-        else return 30;
-    }
+        if (!female.isSelected() && !male.isSelected()) {
+            JOptionPane.showMessageDialog(
+                    null, "请选择性别！！！", "警告", JOptionPane.WARNING_MESSAGE
+            );
+        }
+        boolean gender = male.isSelected();
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(
+                2021 - yearInput.getSelectedIndex(), monthInput.getSelectedIndex(), dayInput.getSelectedIndex() + 1
+        );
+
+        if (userModel.register(
+                nicknameInput.getText(), String.valueOf(passwordInput.getPassword())
+                , "0", gender, calendar.getTime()
+                )) {
+            registerSuccessListener.emit();
+        } else {
+            JOptionPane.showMessageDialog(
+                    null, "注册失败！！！", "警告", JOptionPane.WARNING_MESSAGE
+            );
+        }
+    }
 
     public void created() {
-        System.out.println(min);
         FontTool.setFont(min)
                 .setText("\uE6B7");
         FontTool.setFont(back)
@@ -100,25 +118,23 @@ public class Register extends AbsActivity {
             dayInput.addItem(i);
         }
 
-        ButtonGroup groupGender = new ButtonGroup();
-        groupGender.add(female);
-        groupGender.add(male);
+        male.setActionCommand("male");
+        female.setActionCommand("female");
+        genderGroup.add(female);
+        genderGroup.add(male);
 
-        ButtonGroup groupPicture = new ButtonGroup();
         groupPicture.add(choose1);
         groupPicture.add(choose2);
         groupPicture.add(choose3);
         groupPicture.add(choose4);
 
-        Icon icon1=new ImageIcon(getClass().getResource("/avatar/001.jpg"));
-        Icon icon2=new ImageIcon(getClass().getResource("/avatar/002.jpg"));
-        Icon icon3=new ImageIcon(getClass().getResource("/avatar/003.jpg"));
-        Icon icon4=new ImageIcon(getClass().getResource("/avatar/004.jpg"));
-        picture1.setIcon(icon1);
-        picture2.setIcon(icon2);
-        picture3.setIcon(icon3);
-        picture4.setIcon(icon4);
-
+        JLabel[] pictures = new JLabel[] {
+                picture1, picture2, picture3, picture4
+        };
+        for (int i = 0; i < pictures.length; i++) {
+            JLabel picture = pictures[i];
+            picture.setIcon(new ImageIcon(getClass().getResource("/avatar/00" + (i + 1) + ".jpg")));
+        }
 
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
@@ -131,35 +147,29 @@ public class Register extends AbsActivity {
             emitListener(AbsActivity.MinListener.class);
         }).setMouseClickWithLeftBtn(registerButton, this::register);
 
-        yearInput.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JComboBox cb=(JComboBox) e.getSource();
-                Object newItem=cb.getSelectedItem();
-                int days=getDayByYearAndMonth(Integer.parseInt(newItem.toString()),
-                        Integer.parseInt(monthInput.getSelectedItem().toString()));
-                dayInput.removeAllItems();
-                for(int i=1;i<days;i++)
-                    dayInput.addItem(i);
-            }
+        yearInput.addActionListener(e -> {
+            JComboBox cb=(JComboBox) e.getSource();
+            Object newItem=cb.getSelectedItem();
+            int days = DateTool.getDayByYearAndMonth(
+                    Integer.parseInt(newItem.toString())
+                    , Integer.parseInt(monthInput.getSelectedItem().toString())
+            );
+            dayInput.removeAllItems();
+            for(int i=1;i<days;i++)
+                dayInput.addItem(i);
         });
 
-        monthInput.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JComboBox cb=(JComboBox) e.getSource();
-                Object newItem=cb.getSelectedItem();
-                int days=getDayByYearAndMonth(Integer.parseInt(yearInput.getSelectedItem().toString()),
-                        Integer.parseInt(newItem.toString()));
-                dayInput.removeAllItems();
-                for(int i=1;i<days;i++)
-                    dayInput.addItem(i);
+        monthInput.addActionListener(e -> {
+            JComboBox cb = (JComboBox) e.getSource();
+            Object newItem = cb.getSelectedItem();
+            int days = DateTool.getDayByYearAndMonth(
+                    Integer.parseInt(newItem.toString())
+                    , Integer.parseInt(monthInput.getSelectedItem().toString())
+            );
+            dayInput.removeAllItems();
+            for(int i=1;i<days;i++) {
+                dayInput.addItem(i);
             }
         });
-
-
-
     }
-
-
 }

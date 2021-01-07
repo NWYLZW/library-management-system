@@ -3,6 +3,7 @@ package com.yijie.libraryManagementSystem.model;
 import com.yijie.libraryManagementSystem.Main;
 import com.yijie.libraryManagementSystem.mapper.AbsMapper;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
@@ -28,12 +29,13 @@ public abstract class AbsModel {
      * @param <T>   Mapper.class类
      * @return 返回有sqlSession链接的Mapper示例
      */
-    public static <T> T getMapper(Class<T> type) {
+    public static <T> T getMapper(Class<T> type, SqlSession[] sessions) {
         Configuration myBatisConfig = sessionFactory.getConfiguration();
         if (!myBatisConfig.hasMapper(type)) {
             myBatisConfig.addMapper(type);
         }
-        return sessionFactory.openSession().getMapper(type);
+        sessions[0] = sessionFactory.openSession();
+        return sessions[0].getMapper(type);
     }
 
     private final Map<String, AbsMapper> mappers = new HashMap();
@@ -44,8 +46,8 @@ public abstract class AbsModel {
      * @param <T>           Mapper.class类
      * @return  mapper实例
      */
-    public <T extends AbsMapper> T addMapper(Class<T> mapperClazz) {
-        return this.addMapper(mapperClazz.getName(), mapperClazz);
+    public <T extends AbsMapper> T addMapper(Class<T> mapperClazz, SqlSession[] sessions) {
+        return this.addMapper(mapperClazz.getName(), mapperClazz, sessions);
     }
 
     /**
@@ -55,9 +57,9 @@ public abstract class AbsModel {
      * @param <T>           Mapper.class类
      * @return  mapper实例
      */
-    public <T extends AbsMapper> T addMapper(String name, Class<T> mapperClazz) {
-        T mapper = AbsModel.getMapper(mapperClazz);
-        mappers.put(name, AbsModel.getMapper(mapperClazz));
+    public <T extends AbsMapper> T addMapper(String name, Class<T> mapperClazz, SqlSession[] sessions) {
+        T mapper = AbsModel.getMapper(mapperClazz, sessions);
+        mappers.put(name, AbsModel.getMapper(mapperClazz, sessions));
         return mapper;
     }
 

@@ -40,10 +40,12 @@ public interface UserMapper extends AbsMapper {
      * @param user 用户实体
      * @return 是否添加成功
      */
-    @Insert("insert user into " +
-            "(pp_num,nick_name,password,avatar_path,gender,birthday,cdatetime,mdatetime)" +
-            " value" +
-            "((ppNum=#{ppNum},nickName=#{nickName},password=#{password},avatarPath=#{avatarPath},gender==#{gender},birthday=#{birthday},cDateTime=#{cDateTime},mDateTime=#{mDateTime}))"
+    @Insert(
+            "insert into user(" +
+                    "pp_num, nick_name, password, avatar_path, gender, birthday, cdatetime, mdatetime" +
+                    ") value (" +
+                    "#{ppNum}, #{nickName}, #{password}, #{avatarPath}, #{gender}, #{birthday}, #{cDateTime}, #{mDateTime}" +
+                    ")"
     )
     int addUser(User user);
 
@@ -67,9 +69,9 @@ public interface UserMapper extends AbsMapper {
                     "<if test = 'password != null'>password = #{password},</if> " +
                     "<if test = 'avatarPath != null'>avatar_path = #{avatarPath},</if> " +
                     "<if test = 'gender != null'>gender = #{gender},</if> " +
-                    "mdatetime = #{mdatetime} " +
+                    "mDatetime = #{mDateTime} " +
                     "where ppNum=#{ppNum}" +
-            "</script>"
+                    "</script>"
     )
     int editUser(User user);
 }

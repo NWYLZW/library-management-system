@@ -1,6 +1,8 @@
 package com.yijie.libraryManagementSystem.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -11,6 +13,8 @@ import java.util.Date;
  * @note    2021-01-06 19:32 iBesokuse Created User.java file
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     /** pp号 */
     private String ppNum;
