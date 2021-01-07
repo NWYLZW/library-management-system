@@ -5,6 +5,8 @@ import com.yijie.libraryManagementSystem.tool.ListenerTool;
 import com.yijie.libraryManagementSystem.tool.WindowTool;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Register extends AbsActivity {
@@ -44,8 +46,18 @@ public class Register extends AbsActivity {
     public void register() {
         registerSuccessListener.emit();
     }
+    public  int getDayByYearAndMonth(int year,int month) {
+        if (month == 2)
+            if ((year%4==0 && year%100!=0) || (year%100==0 && year%400==0))
+                return 29;
+            else return 28;
+        else if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12)
+            return 31;
+        else return 30;
+    }
 
-    public void created() {
+
+        public void created() {
         System.out.println(min);
         FontTool.setFont(min)
                 .setText("\uE6B7");
@@ -53,12 +65,33 @@ public class Register extends AbsActivity {
                 .setText("\uE636");
         FontTool.setFont(close)
                 .setText("\uE65E");
+        FontTool.setFont(name)
+                .setText("\ue74c");
+        FontTool.setFont(pwd)
+                .setText("\ue620");
+        FontTool.setFont(gender)
+                .setText("\ue61e");
+        FontTool.setFont(birthday)
+                .setText("\ue74d");
         min.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         close.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         FontTool.setFont(icon)
                 .setText("\ue612");
+        for(int i=2021;i>1980;i--){
+            yearInput.addItem(i);
+        }
+        for(int i=1;i<=12;i++){
+            monthInput.addItem(i);
+        }
+        for(int i=1;i<=31;i++){
+            dayInput.addItem(i);
+        }
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(female);
+        group.add(male);
 
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
@@ -70,5 +103,33 @@ public class Register extends AbsActivity {
         ).setMouseClickWithLeftBtn(min, () -> {
             emitListener(AbsActivity.MinListener.class);
         }).setMouseClickWithLeftBtn(registerButton, this::register);
+
+        yearInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cb=(JComboBox) e.getSource();
+                Object newItem=cb.getSelectedItem();
+                int days=getDayByYearAndMonth(Integer.parseInt(newItem.toString()),
+                        Integer.parseInt(monthInput.getSelectedItem().toString()));
+                dayInput.removeAllItems();
+                for(int i=1;i<days;i++)
+                    dayInput.addItem(i);
+            }
+        });
+
+        monthInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cb=(JComboBox) e.getSource();
+                Object newItem=cb.getSelectedItem();
+                int days=getDayByYearAndMonth(Integer.parseInt(yearInput.getSelectedItem().toString()),
+                        Integer.parseInt(newItem.toString()));
+                dayInput.removeAllItems();
+                for(int i=1;i<days;i++)
+                    dayInput.addItem(i);
+            }
+        });
     }
+
+
 }
