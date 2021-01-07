@@ -12,7 +12,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class LoginAfterPage {
+public class LoginAfterPage extends AbsActivity {
     private JPanel main;
     private JTextField search;
     private JPanel bottom;
@@ -25,20 +25,14 @@ public class LoginAfterPage {
 
     private final UserModel userModel = new UserModel();
 
-    /**
-     * 登陆按钮的监听者
-     */
-    interface LoginSuccessListener {
-        public void emit();
-    }
     public Login.LoginSuccessListener loginSuccessListener = null;
 
-    @Override
+
     public JPanel getMain() {
         return main;
     }
 
-    @Override
+
     public void created() {
         FontTool.setFont(min)
                 .setText("\uE6B7");
@@ -55,44 +49,18 @@ public class LoginAfterPage {
         //title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
 
-    public void login() {
-        if (userModel.login(
-                ppNumInput.getText(), String.valueOf(passwordInput.getPassword())
-        )) {
-            if (loginSuccessListener != null) {
-                loginSuccessListener.emit();
-            }
-        } else {
-            JOptionPane.showMessageDialog(
-                    null, "登陆失败！！！", "警告", JOptionPane.WARNING_MESSAGE
-            );
-        }
-    }
 
-    @Override
+
+
+
     public void mounted() {
         ListenerTool.setMouseClickWithLeftBtn(close, () -> {
             System.exit(0);
         }).setMouseClickWithLeftBtn(min, () -> {
             emitListener(AbsActivity.MinListener.class);
-        }).setMouseClickWithLeftBtn(loginBtn, this::login
-        ).setMouseClickWithLeftBtn(registerBtn, () -> {
-            WindowTool.openFrame("Login", new Register(), (frame, activity) -> {
-                activity.registerSuccessListener = () -> frame.setVisible(false);
-            }, null, newWindow -> {
-                newWindow.setLocationRelativeTo(null);
-            });
         });
     }
 
-    public static void show() {
-        WindowTool.openFrame("Login", new Login(), (frame, activity) -> {
-            activity.loginSuccessListener = () -> {
-                WindowTool.openFrame("Chats", new Chats(), null, null, null);
-            };
-        }, null, newWindow -> {
-            newWindow.setLocationRelativeTo(null);
-        });
-    }
+
 }
 
