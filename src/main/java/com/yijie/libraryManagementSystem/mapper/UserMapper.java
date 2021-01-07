@@ -1,8 +1,7 @@
 package com.yijie.libraryManagementSystem.mapper;
 
 import com.yijie.libraryManagementSystem.entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,19 +18,21 @@ public interface UserMapper extends AbsMapper {
      * @param ppNum pp号
      * @return 搜索到的用户
      */
-    @Select("select * from user where ppNum = #{ppNum}")
+    @Select("select * from user where pp_num = #{ppNum}")
     User getUserByPPNum(String ppNum);
 
     /**
      * 获取当前总用户数
      * @return 总用户数量
      */
+    @Select("select count(*) from user ")
     int getUserCount();
 
     /**
      * 获取所有的用户列表
      * @return 用户列表
      */
+    @Select("select * from user")
     List<User> getAllUsers();
 
     /**
@@ -39,6 +40,11 @@ public interface UserMapper extends AbsMapper {
      * @param user 用户实体
      * @return 是否添加成功
      */
+    @Insert("insert user into " +
+            "(pp_num,nick_name,password,avatar_path,gender,birthday,cdatetime,mdatetime)" +
+            " value" +
+            "((ppNum=#{ppNum},nickName=#{nickName},password=#{password},avatarPath=#{avatarPath},gender==#{gender},birthday=#{birthday},cDateTime=#{cDateTime},mDateTime=#{mDateTime}))"
+    )
     int addUser(User user);
 
     /**
@@ -46,6 +52,7 @@ public interface UserMapper extends AbsMapper {
      * @param ppNum 用户pp号
      * @return 是否删除成功
      */
+    @Delete("delete user from ppNum=#{ppNum}")
     int deleteUser(String ppNum);
 
     /**
@@ -53,5 +60,16 @@ public interface UserMapper extends AbsMapper {
      * @param user  用户字典
      * @return 是否编辑成功
      */
+    @Update(
+            "<script>" +
+                    "update user set " +
+                    "<if test = 'nickName != null'>pp_ = #{ppNum},</if> " +
+                    "<if test = 'password != null'>password = #{password},</if> " +
+                    "<if test = 'avatarPath != null'>avatar_path = #{avatarPath},</if> " +
+                    "<if test = 'gender != null'>gender = #{gender},</if> " +
+                    "mdatetime = #{mdatetime} " +
+                    "where ppNum=#{ppNum}" +
+            "</script>"
+    )
     int editUser(User user);
 }

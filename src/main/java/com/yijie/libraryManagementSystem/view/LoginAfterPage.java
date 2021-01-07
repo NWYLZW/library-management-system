@@ -1,6 +1,7 @@
 package com.yijie.libraryManagementSystem.view;
 
 import com.yijie.libraryManagementSystem.config.AppConfig;
+import com.yijie.libraryManagementSystem.model.UserModel;
 import com.yijie.libraryManagementSystem.tool.FontTool;
 import com.yijie.libraryManagementSystem.tool.ListenerTool;
 import com.yijie.libraryManagementSystem.tool.WindowTool;
@@ -8,32 +9,30 @@ import com.yijie.libraryManagementSystem.tool.WindowTool;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * @desc    Chats.java
- * @author  yijie
- * @date    2021-01-06 22:10
- * @note    2021-01-06 22:10 yijie Created the Chats.java file
- */
-public class Chats extends AbsActivity {
+import javax.swing.*;
+import java.awt.*;
+
+public class LoginAfterPage extends AbsActivity {
     private JPanel main;
-    private JPanel top;
-    private JPanel titlePanel;
-    private JLabel title;
-    private JTextField searchText;
-    private JLabel headImage;
-    private JLabel loginName;
+    private JTextField search;
+    private JPanel bottom;
     private JLabel searchIcon;
     private JLabel icon;
     private JLabel min;
     private JLabel close;
-    private JTextArea view;
+    private JLabel headImage;
+    private JLabel username;
 
-    @Override
+    private final UserModel userModel = new UserModel();
+
+    public Login.LoginSuccessListener loginSuccessListener = null;
+
+
     public JPanel getMain() {
         return main;
     }
 
-    @Override
+
     public void created() {
         FontTool.setFont(min)
                 .setText("\uE6B7");
@@ -47,15 +46,21 @@ public class Chats extends AbsActivity {
         FontTool.setFont(searchIcon)
                 .setText("\ue6d3");
 
-        title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
+        //title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
 
-    @Override
+
+
+
+
     public void mounted() {
         ListenerTool.setMouseClickWithLeftBtn(close, () -> {
             System.exit(0);
         }).setMouseClickWithLeftBtn(min, () -> {
-            emitListener(MinListener.class);
+            emitListener(AbsActivity.MinListener.class);
         });
     }
+
+
 }
+
