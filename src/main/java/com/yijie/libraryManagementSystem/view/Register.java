@@ -65,9 +65,8 @@ public class Register extends AbsActivity {
     public void mounted() {
         ListenerTool.setMouseClickWithLeftBtn(close, () -> {
             System.exit(0);
-        }).setMouseClickWithLeftBtn(back, () -> {
-            WindowTool.closeFrame();
-        }).setMouseClickWithLeftBtn(min, () -> {
+        }).setMouseClickWithLeftBtn(back, WindowTool::closeFrame
+        ).setMouseClickWithLeftBtn(min, () -> {
             emitListener(AbsActivity.MinListener.class);
         }).setMouseClickWithLeftBtn(registerButton, this::register);
     }
