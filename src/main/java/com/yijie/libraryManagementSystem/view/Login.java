@@ -88,7 +88,7 @@ public class Login extends AbsActivity {
         }).setMouseClickWithLeftBtn(loginBtn, this::login
         ).setMouseClickWithLeftBtn(registerBtn, () -> {
             WindowTool.openFrame("Login", new Register(), (frame, activity) -> {
-                activity.registerSuccessListener = () -> frame.setVisible(false);
+                activity.registerSuccessListener = WindowTool::closeFrame;
             }, null, newWindow -> {
                 newWindow.setLocationRelativeTo(null);
             });

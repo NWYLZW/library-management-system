@@ -7,11 +7,11 @@ import com.yijie.libraryManagementSystem.tool.ListenerTool;
 import com.yijie.libraryManagementSystem.tool.WindowTool;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import javax.swing.*;
 
 public class Register extends AbsActivity {
@@ -49,7 +49,7 @@ public class Register extends AbsActivity {
     private JPanel pictures;
 
     ButtonGroup genderGroup = new ButtonGroup();
-    ButtonGroup groupPicture = new ButtonGroup();
+    ButtonGroup avatarGroup = new ButtonGroup();
 
     interface registerSuccessListener {
         public void emit();
@@ -63,13 +63,32 @@ public class Register extends AbsActivity {
 
     UserModel userModel = new UserModel();
     public void register() {
+        if (nicknameInput.getText().equals("")) {
+            JOptionPane.showMessageDialog(
+                    null, "请输入昵称！！！", "警告", JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        if (passwordInput.getText().equals("")) {
+            JOptionPane.showMessageDialog(
+                    null, "请输入密码！！！", "警告", JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
         if (!female.isSelected() && !male.isSelected()) {
             JOptionPane.showMessageDialog(
                     null, "请选择性别！！！", "警告", JOptionPane.WARNING_MESSAGE
             );
+            return;
         }
-        boolean gender = male.isSelected();
+        if (avatarGroup.getSelection() == null) {
+            JOptionPane.showMessageDialog(
+                    null, "请选择头像！！！", "警告", JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
+        boolean gender = male.isSelected();
         Calendar calendar = Calendar.getInstance();
         calendar.set(
                 2021 - yearInput.getSelectedIndex(), monthInput.getSelectedIndex(), dayInput.getSelectedIndex() + 1
@@ -77,9 +96,11 @@ public class Register extends AbsActivity {
 
         if (userModel.register(
                 nicknameInput.getText(), String.valueOf(passwordInput.getPassword())
-                , "0", gender, calendar.getTime()
+                , avatarGroup.getSelection().getActionCommand(), gender, calendar.getTime()
                 )) {
-            registerSuccessListener.emit();
+            if (registerSuccessListener != null) {
+                registerSuccessListener.emit();
+            }
         } else {
             JOptionPane.showMessageDialog(
                     null, "注册失败！！！", "警告", JOptionPane.WARNING_MESSAGE
@@ -118,15 +139,23 @@ public class Register extends AbsActivity {
             dayInput.addItem(i);
         }
 
-        male.setActionCommand("male");
-        female.setActionCommand("female");
-        genderGroup.add(female);
-        genderGroup.add(male);
+        Map<String, JRadioButton> radioButtonMap = new HashMap<>();
+        radioButtonMap.put("male", male);
+        radioButtonMap.put("female", female);
 
-        groupPicture.add(choose1);
-        groupPicture.add(choose2);
-        groupPicture.add(choose3);
-        groupPicture.add(choose4);
+        Function<ButtonGroup, BiConsumer<String, JRadioButton>> createSetAction = (group) -> (key, btn) -> {
+            btn.setActionCommand(key);
+            group.add(btn);
+        };
+        radioButtonMap.forEach(createSetAction.apply(genderGroup));
+
+        radioButtonMap.clear();
+        radioButtonMap.put("1", choose1);
+        radioButtonMap.put("2", choose2);
+        radioButtonMap.put("3", choose3);
+        radioButtonMap.put("4", choose4);
+
+        radioButtonMap.forEach(createSetAction.apply(avatarGroup));
 
         JLabel[] pictures = new JLabel[] {
                 picture1, picture2, picture3, picture4
