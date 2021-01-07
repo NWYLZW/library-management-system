@@ -46,6 +46,7 @@ public class Register extends AbsActivity {
     }
 
     public void created() {
+        System.out.println(min);
         FontTool.setFont(min)
                 .setText("\uE6B7");
         FontTool.setFont(back)
