@@ -1,5 +1,6 @@
 package com.yijie.libraryManagementSystem;
 
+import com.yijie.libraryManagementSystem.entity.User;
 import com.yijie.libraryManagementSystem.mapper.UserMapper;
 import com.yijie.libraryManagementSystem.model.AbsModel;
 import org.junit.Test;
@@ -15,6 +16,22 @@ public class TestUserMapper {
     @Test
     public void testFindUser() {
         UserMapper userMapper = AbsModel.getMapper(UserMapper.class);
-        assertNull(userMapper.getUserByPPNum("2000000"));
+        assertNull(userMapper.getUserByPPNum("10000"));
+    }
+
+    @Test
+    public void testAddUser() {
+        UserMapper userMapper = AbsModel.getMapper(UserMapper.class);
+        User user = new User();
+        user.setPpNum("t_100001");
+        user.setAvatarPath("");
+        userMapper.addUser(user);
+        assertNotNull(userMapper.getUserByPPNum("t_100001"));
+    }
+
+    public void testdeleteUser() {
+        UserMapper userMapper = AbsModel.getMapper(UserMapper.class);
+        userMapper.deleteUser(userMapper.getUserByPPNum("100001").getPpNum());
+        assertNotNull(userMapper.getUserByPPNum("t_100001"));
     }
 }
