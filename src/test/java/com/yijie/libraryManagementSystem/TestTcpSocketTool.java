@@ -1,6 +1,6 @@
 package com.yijie.libraryManagementSystem;
 
-import com.yijie.libraryManagementSystem.entity.User;
+import com.yijie.libraryManagementSystem.entity.Message;
 import com.yijie.libraryManagementSystem.tool.UserTool;
 import com.yijie.libraryManagementSystem.tool.internet.TcpSocketTool;
 import org.junit.Test;
@@ -14,13 +14,11 @@ import org.junit.Test;
 public class TestTcpSocketTool {
     @Test
     public void testServer() {
-        TcpSocketTool.createServer();
-
-        System.out.println(
-                TcpSocketTool.sendMessage("127.0.0.1", "测试信息1")
-        );
-        System.out.println(
-                TcpSocketTool.sendMessage("127.0.0.1", "测试信息2")
-        );
+        TcpSocketTool.sendMessage("127.0.0.1", "测试信息1", response -> {
+            System.out.println("response:" + response);
+            return Message.structure(
+                    UserTool.curUser(), "", Message.Type.CLOSE
+            );
+        });
     }
 }
