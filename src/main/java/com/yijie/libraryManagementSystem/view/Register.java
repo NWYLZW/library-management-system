@@ -32,6 +32,17 @@ public class Register extends AbsActivity {
     private JLabel icon;
     private JLabel name;
     private JLabel back;
+    private JRadioButton choose1;
+    private JRadioButton choose2;
+    private JRadioButton choose3;
+    private JRadioButton choose4;
+    private JPanel bottom;
+    private JLabel picture1;
+    private JLabel picture2;
+    private JLabel picture3;
+    private JLabel picture4;
+    private JPanel picture;
+
 
     interface registerSuccessListener {
         public void emit();
@@ -57,7 +68,7 @@ public class Register extends AbsActivity {
     }
 
 
-        public void created() {
+    public void created() {
         System.out.println(min);
         FontTool.setFont(min)
                 .setText("\uE6B7");
@@ -89,9 +100,25 @@ public class Register extends AbsActivity {
             dayInput.addItem(i);
         }
 
-        ButtonGroup group = new ButtonGroup();
-        group.add(female);
-        group.add(male);
+        ButtonGroup groupGender = new ButtonGroup();
+        groupGender.add(female);
+        groupGender.add(male);
+
+        ButtonGroup groupPicture = new ButtonGroup();
+        groupPicture.add(choose1);
+        groupPicture.add(choose2);
+        groupPicture.add(choose3);
+        groupPicture.add(choose4);
+
+        Icon icon1=new ImageIcon(getClass().getResource("/avatar/001.jpg"));
+        Icon icon2=new ImageIcon(getClass().getResource("/avatar/002.jpg"));
+        Icon icon3=new ImageIcon(getClass().getResource("/avatar/003.jpg"));
+        Icon icon4=new ImageIcon(getClass().getResource("/avatar/004.jpg"));
+        picture1.setIcon(icon1);
+        picture2.setIcon(icon2);
+        picture3.setIcon(icon3);
+        picture4.setIcon(icon4);
+
 
         title.setText(AppConfig.NAME + "[" + AppConfig.VERSION + "]");
     }
@@ -129,6 +156,9 @@ public class Register extends AbsActivity {
                     dayInput.addItem(i);
             }
         });
+
+
+
     }
 
 
