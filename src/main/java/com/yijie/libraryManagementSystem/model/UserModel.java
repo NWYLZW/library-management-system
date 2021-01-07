@@ -26,6 +26,17 @@ public class UserModel extends AbsModel {
     }
 
     /**
+     * 注册用户
+     * @param ppNum     PP号
+     * @return 返回注册是否成功
+     */
+    public boolean register(
+            String ppNum
+    ) {
+        return true;
+    }
+
+    /**
      * 登出用户
      * @param ppNum     PP号
      */
