@@ -14,10 +14,7 @@ import java.util.Date;
  */
 public class UserModel extends AbsModel {
     SqlSession[] sessions = new SqlSession[1];
-
-    public UserModel() {
-        this.addMapper(UserMapper.class, sessions);
-    }
+    UserMapper userMapper = addMapper(UserMapper.class, this);
 
     /**
      * 登陆用户
@@ -29,7 +26,6 @@ public class UserModel extends AbsModel {
             String ppNum, String password
     ) {
         try {
-            UserMapper userMapper= (UserMapper) getMapper("com.yijie.libraryManagementSystem.mapper.UserMapper");
             User user = userMapper.getUserByPPNum(ppNum);
             if (user == null) {
                 return false;
@@ -50,7 +46,6 @@ public class UserModel extends AbsModel {
             , Boolean gender, Date birthday
     ) {
         try {
-            UserMapper userMapper = (UserMapper) getMapper("com.yijie.libraryManagementSystem.mapper.UserMapper");
             int startPPNum = 200000;
             userMapper.addUser(new User(
                     "" + (startPPNum + userMapper.getUserCount()), nickName, password, avatarPath, gender, birthday

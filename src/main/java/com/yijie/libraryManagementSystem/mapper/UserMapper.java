@@ -54,7 +54,7 @@ public interface UserMapper extends AbsMapper {
      * @param ppNum 用户pp号
      * @return 是否删除成功
      */
-    @Delete("delete user from ppNum=#{ppNum}")
+    @Delete("delete from user where pp_num=#{ppNum}")
     int deleteUser(String ppNum);
 
     /**
@@ -65,13 +65,13 @@ public interface UserMapper extends AbsMapper {
     @Update(
             "<script>" +
                     "update user set " +
-                    "<if test = 'nickName != null'>pp_ = #{ppNum},</if> " +
+                    "<if test = 'nickName != null'>nick_name = #{nickName},</if> " +
                     "<if test = 'password != null'>password = #{password},</if> " +
                     "<if test = 'avatarPath != null'>avatar_path = #{avatarPath},</if> " +
                     "<if test = 'gender != null'>gender = #{gender},</if> " +
                     "mDatetime = #{mDateTime} " +
                     "where ppNum=#{ppNum}" +
-                    "</script>"
+            "</script>"
     )
     int editUser(User user);
 }
